@@ -55,9 +55,10 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > deploy_key.pem
           chmod 600 deploy_key.pem
           ssh -o StrictHostKeyChecking=no -i deploy_key.pem $DEPLOY_USER@$SERVER_IP << 'EOF'
-            cd /path/to/app
+            cd /home/ubuntu/fastapi-book-project
             git pull origin main
-            sudo systemctl restart fastapi
-            sudo nginx -s reload
+            source venv/bin/activate  # Activate virtual environment
+            pip install -r requirements.txt  # Ensure dependencies are up to date
+            sudo systemctl restart fastapi  # Restart FastAPI service
+            sudo nginx -s reload 
           EOF
-    
