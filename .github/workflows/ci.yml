@@ -62,3 +62,5 @@ jobs:
             sudo systemctl restart fastapi  # Restart FastAPI service
             sudo nginx -s reload 
           EOF
+
+
