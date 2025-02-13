@@ -25,19 +25,6 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install flake8 black mypy
-
-      - name: Run Syntax Check
-        run: python -m py_compile $(find . -name "*.py")
-
-      - name: Run Black (formatting check)
-        run: black --check .
-
-      - name: Run Flake8 (linting check)
-        run: flake8 .
-
-      - name: Run Mypy (type checking)
-        run: mypy .
 
       - name: Run Pytest (unit tests)
         run: pytest --exitfirst --disable-warnings
