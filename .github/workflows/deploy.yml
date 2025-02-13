@@ -1,9 +1,6 @@
 name: CI/CD Pipeline
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
@@ -27,9 +24,9 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i deploy_key.pem $DEPLOY_USER@$SERVER_IP << 'EOF'
             cd /home/ubuntu/fastapi-book-project
             git pull origin main
-            source venv/bin/activate  # Activate virtual environment
-            pip install -r requirements.txt  # Ensure dependencies are up to date
-            sudo systemctl restart fastapi  # Restart FastAPI service
+            source venv/bin/activate
+            pip install -r requirements.txt
+            sudo systemctl restart fastapi
             sudo nginx -s reload 
           EOF
 
