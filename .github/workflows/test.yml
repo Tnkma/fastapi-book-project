@@ -11,7 +11,7 @@ on:
 jobs:
   # Job 1: Run tests on PR
   test:
-    name: Run Pytest on PR
+    name: Run Linting and Pytest on PR
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -22,19 +22,26 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install flake8 black mypy
 
-      - name: Run tests
-        run: pytest --maxfail=5 --disable-warnings
+      - name: Run Syntax Check
+        run: python -m py_compile $(find . -name "*.py")
+
+      - name: Run Black (formatting check)
+        run: black --check .
+
+      - name: Run Flake8 (linting check)
+        run: flake8 .
+
+      - name: Run Mypy (type checking)
+        run: mypy .
+
+      - name: Run Pytest (unit tests)
+        run: pytest --exitfirst --disable-warnings
+
 
           
   # Job 2: Merge Verification
