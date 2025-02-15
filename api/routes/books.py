@@ -40,7 +40,7 @@ db.books = {
     5: Book(
         id=5,
         title="The Return of the King and the bitches",
-        author="J.R.R. Tolkien and john Doe",
+        author="J.R.R. Tolkien and john Doe the greatest",
         publication_year=2024,
         genre=Genre.FANTASY,
     ),
